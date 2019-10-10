@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
   View,
   ScrollView,
-  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 
@@ -47,26 +44,10 @@ export default class SpellList extends Component{
         <Search value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(this.props.navigation.state.params.url + "/" + parseInt(this.state.page * this.state.spellsPerPage) + "/" + parseInt(this.state.spellsPerPage) + "/" + this.state.search)} />
 
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          { this.state.spellList.map(s => ( this._renderElement(s) )) }
+          { this.state.spellList.map(s => ( <Card id={s.id} title={s.name} level={s.level} range={s.range} onPress={(id) => {}} /> )) }
         </View>
       </ScrollView>
     );
-  }
-
-  _renderElement = (s) => {
-    return(
-      <Card id={s.id} title={s.name} level={s.level} range={s.range} onPress={(id) => {}} />
-    );
-/*     return (
-      <TouchableOpacity key={s.id} style={{marginBottom: 10}} onPress={() => {}} >
-        <View style={{flexDirection: 'row'}} title={s.name}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.text}>Level: { s.level }</Text>
-            <Text style={styles.text}>Range: { s.range }</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    ) */
   }
 
   _getSpellList = () => {
@@ -84,10 +65,3 @@ export default class SpellList extends Component{
     });
   }
 }
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-    textAlign: 'center'
-  }
-});

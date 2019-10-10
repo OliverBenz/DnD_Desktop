@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-import NavBarOld from './classes/navBar/navBar.js';
+/* import NavBarOld from './classes/navBar/navBar.js'; */
 import NavBar from './classes/navBar.js';
 import Home from './classes/home.js';
 import SpellList from './classes/spellList.js';

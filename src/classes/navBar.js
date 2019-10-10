@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
-  Text
+  TouchableOpacity
 } from 'react-native';
 import { Link } from 'react-router-dom';
 
