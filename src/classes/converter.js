@@ -1,20 +1,14 @@
-'use strict';
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   TextInput,
   View,
-  Button,
-  TouchableOpacity,
-  Image
+  TouchableOpacity
 } from 'react-native';
 
-type Props = {};
 
-
-export default class Converter extends Component<Props>{
+export default class Converter extends Component{
   static navigationOptions = {
     title: 'Converter',
   };
@@ -30,7 +24,7 @@ export default class Converter extends Component<Props>{
   }
 
   _updateMeter = (meter) => {
-    if(meter != ""){
+    if(meter !== ""){
       let y = (parseInt(meter) * 1.0936).toFixed(2);
       this.setState({result: y, resType: "Yards", meter: meter});
     }else{
@@ -39,7 +33,7 @@ export default class Converter extends Component<Props>{
   };
 
   _updateYard = (yard) => {
-    if(yard != ""){
+    if(yard !== ""){
       let m = (parseInt(yard) / 1.0936).toFixed(2);
       this.setState({result: m, resType: "Meters", yard: yard});  
     }else{

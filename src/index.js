@@ -1,21 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-import NavBar from './classes/navBar/navBar.js';
-import Home from './classes/home/home.js';
-import SpellList from './classes/spellList/spellList.js';
+import NavBarOld from './classes/navBar/navBar.js';
+import NavBar from './classes/navBar.js';
+import Home from './classes/home.js';
+import SpellList from './classes/spellList.js';
+import Converter from './classes/converter.js';
 
 const routing = (
     <Router>
+{/*         <NavBarOld /> */}
         <NavBar />
 
         <Switch>
             <Route exact path="/" component={Home} />
             {/* <Route path="/home" component={Home} /> */}
             <Route path="/spellList" component={SpellList} />
+            <Route path="/converter" component={Converter} />
         </Switch>
     </Router>
 );
