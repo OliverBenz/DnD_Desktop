@@ -7,8 +7,7 @@ import {
 
 import Search from '../components/search.js';
 import { Card } from '../components/card.js';
-/* import { Card } from 'react-native-elements';
- */
+
 export default class SpellList extends Component{
  
   constructor(props){
@@ -34,7 +33,7 @@ export default class SpellList extends Component{
       // TODO: Center indivator to center of screen
       return (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-         <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#0000ff" />
         </View>
       );
     }
@@ -44,7 +43,7 @@ export default class SpellList extends Component{
         <Search value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(this.props.navigation.state.params.url + "/" + parseInt(this.state.page * this.state.spellsPerPage) + "/" + parseInt(this.state.spellsPerPage) + "/" + this.state.search)} />
 
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          { this.state.spellList.map(s => ( <Card id={s.id} title={s.name} level={s.level} range={s.range} onPress={(id) => {}} /> )) }
+          { this.state.spellList.map(s => ( <Card id={s.id} title={s.name} level={s.level} range={s.range} onClick={(id) => this.props.history.push(`/spells/${id}`)} /> )) }
         </View>
       </ScrollView>
     );

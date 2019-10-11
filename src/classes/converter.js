@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity
-} from 'react-native';
-
 
 export default class Converter extends Component{
-  static navigationOptions = {
-    title: 'Converter',
-  };
-
   constructor(props){
     super(props);
+
     this.state = {
       meter: "",
       yard: "",
@@ -23,23 +12,16 @@ export default class Converter extends Component{
     }
   }
 
-  _updateMeter = (meter) => {
-    if(meter !== ""){
-      let y = (parseInt(meter) * 1.0936).toFixed(2);
-      this.setState({result: y, resType: "Yards", meter: meter});
-    }else{
-      this.setState({meter: meter});
+  _update = ({value, name}) => {
+    if(name === "meter"){
+      let y = (parseInt(value) * 1.0936).toFixed(2);
+      this.setState({result: y, resType: "Yards", meter: value});
     }
-  };
-
-  _updateYard = (yard) => {
-    if(yard !== ""){
-      let m = (parseInt(yard) / 1.0936).toFixed(2);
-      this.setState({result: m, resType: "Meters", yard: yard});  
-    }else{
-      this.setState({yard: yard});
+    else if(name === "yard"){
+      let m = (parseInt(value) / 1.0936).toFixed(2);
+      this.setState({result: m, resType: "Meters", yard: value});  
     }
-  };
+  }
 
   _reset = () => {
     this.setState({meter: "", yard: "", result: 0, resType: "Meters"});
@@ -47,37 +29,32 @@ export default class Converter extends Component{
 
   render(){
     return(
-      <View style={[styles.container, {flexDirection: 'column'}]}>
-        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 50}}>
-          <Text style={[styles.text, {flex: 2}]}>Meter: </Text>
-          <TextInput keyboardType={'numeric'} underlineColorAndroid={'transparent'} style={[styles.text, {flex: 4, marginRight: 5}]} onChange={(e) => this._updateMeter(e.nativeEvent.text)} placeholder="1" value={this.state.meter} />
-          
-          <Text style={[styles.text, {flex: 2}]}>Yards: </Text>
-          <TextInput keyboardType={'numeric'} underlineColorAndroid={'transparent'} style={[styles.text, {flex: 4, marginLeft: 5}]} onChange={(e) => this._updateYard(e.nativeEvent.text)} placeholder="1.0936" value={this.state.yard} />   
-        </View>
+      <div style={ styles.container }>
+        <p style={ styles.text }>Meters: </p>
+        <input style={ styles.text } type="number" name="meter" onChange={(e) => this._update(e.target)} value={this.state.meter} />
         
-        <Text style={styles.text}>Result: {this.state.result} {this.state.resType}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => this._reset()}>
-          <Text style={styles.text}>Reset</Text>
-        </TouchableOpacity>
-      </View>
+        <p style={ styles.text }>Yards: </p>
+        <input style={ styles.text } type="number" name="yard" onChange={(e) => this._update(e.target)} value={this.state.yard} />
+
+        <p style={ styles.text }>Result: {this.state.result} {this.state.resType}</p>
+
+        <button style={styles.button} onClick={() => this._reset()} >Reset</button>
+      </div>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const styles={
   container: {
     padding: 10
   },
   text: {
-    fontSize: 18
+    fontSize: 16
   },
   button: {
-    alignItems: 'center',
-    padding: 15,
-    borderWidth: 1,
-    borderColor: '#A9A9A9',
-    margin: 10,
-    marginTop: 30
+    textAlign: 'center',
+    fontSize: 16,
+    padding: 5,
+    width: 80
   },
-});
+}

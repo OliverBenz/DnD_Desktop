@@ -1,48 +1,46 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity
-} from 'react-native';
+
 
 export class Card extends Component{
   render(){
     return(
-      <TouchableOpacity style={{width: '50%'}} onPress={() => this.props.onPress(this.props.id)}>
-        <View style={styles.wrapper} key={this.props.id}>
+      <button style={{width: '50%', backgroundColor: 'transparent', border: 'none'}} onClick={() => this.props.onClick(this.props.id)}>
+        <div style={styles.wrapper} key={this.props.id}>
           {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.text}>{ this.props.title }</Text>
-          </View>
+          <div style={styles.header}>
+            <p style={styles.text}>{ this.props.title }</p>
+          </div>
 
           {/* Body */}
-          <View style={{flexDirection: 'row'}}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.text}>Level: { this.props.level }</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.text}>Range: { this.props.range }</Text>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-
+          <div>
+            <div style={ styles.body }>
+              <p style={styles.text}>Level: { this.props.level }</p>
+            </div>
+            <div style={ styles.body }>
+              <p style={styles.text}>Range: { this.props.range }</p>
+            </div>
+          </div>
+        </div>
+      </button>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   wrapper: {
-    borderWidth: 1,
-    padding: 10,
-    margin: 5
+    border: '1px solid black',
+    padding: 5,
+    margin: 5,
   },
   header: {
-    marginBottom: 10
+    marginBottom: 5
+  },
+  body: {
+    display: 'inline-block',
+    width: '50%'
   },
   text: {
     fontSize: 18,
     alignSelf: 'center'
   }
-});
+};

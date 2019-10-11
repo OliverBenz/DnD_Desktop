@@ -4,22 +4,24 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-/* import NavBarOld from './classes/navBar/navBar.js'; */
-import NavBar from './classes/navBar.js';
+import NavBar from './classes/navBar/navBar.js';
 import Home from './classes/home.js';
 import SpellList from './classes/spellList.js';
+import SpellSpecific from './classes/spellSpecific.js';
 import Converter from './classes/converter.js';
+import Character from './classes/character/character.js';
 
 const routing = (
     <Router>
-{/*         <NavBarOld /> */}
         <NavBar />
 
         <Switch>
             <Route exact path="/" component={Home} />
             {/* <Route path="/home" component={Home} /> */}
-            <Route path="/spellList" component={SpellList} />
+            <Route path="/spells" component={SpellList} />
+            <Route path="/spells/:id" component={SpellSpecific} />
             <Route path="/converter" component={Converter} />
+            <Route path="/character" component={Character} />
         </Switch>
     </Router>
 );

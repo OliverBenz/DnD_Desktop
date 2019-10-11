@@ -2,7 +2,7 @@ import React from 'react';
 import './navBar.css';
 import { Link } from 'react-router-dom';
 
-export default class NavBarOld extends React.Component{
+export default class NavBar extends React.Component{
     render(){
         return(
             <ul>
@@ -10,25 +10,15 @@ export default class NavBarOld extends React.Component{
                     <Link to={"/"}>Home</Link>
                 </li>
                 <li>
-                    <Link to="/spellList">Spell List</Link>
+                    <Link to={"/character"}>Character</Link>
+                </li>
+                <li>
+                    <Link to="/spells">Spell List</Link>
                 </li>
                 <li>
                     <Link to="/converter">Converter</Link>
                 </li>
             </ul>
-
-            // <div>
-
-
-            //     <p>Home</p>
-            //     <p>Character</p>
-            //     <p>Spell List</p>
-            //     <p>Converter</p>
-            //     <button>
-            //         <Link to="/spellList"></Link>
-            //         Button
-            //     </button>
-            // </div>
-        )
+        );
     }
 }
