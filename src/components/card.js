@@ -1,32 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 
+export class Card extends Component{
+  constructor(props){
+    super(props);
 
-export function Card(props){
-  return(
-    <button style={{width: '50%', backgroundColor: 'transparent', border: 'none'}} onClick={() => props.onClick(props.id)}>
-      <div style={styles.wrapper} key={props.id}>
-        {/* Header */}
-        <div style={styles.header}>
-          <p style={styles.text}>{ props.title }</p>
-        </div>
+    this.state = {
+      boxShadow: 'none',
 
-        {/* Body */}
-        <div>
-          <div style={ styles.body }>
-            <p style={styles.text}>Level: { props.level }</p>
+    }
+  }
+  
+  render(){
+    const { boxShadow } = this.state;
+
+    return(
+      <button
+      style={{...{
+        width: '45%',
+        backgroundColor: 'transparent',
+        boxShadow: boxShadow,
+        border: '1px solid black',
+        margin: '5px'
+      }, ...this.props.style}}
+      onClick={() => this.props.onClick(this.props.id)}
+      onMouseOver={() => this.setState({ boxShadow: '0 6px 8px 0 rgba(0,0,0,0.24), 0 15px 28px 0 rgba(0,0,0,0.19)' })} 
+      onMouseOut={() => this.setState({ boxShadow: 'none' })} >
+        <div style={styles.wrapper} key={this.props.spell.id}>
+          {/* Header */}
+          <div style={styles.header}>
+            <p style={styles.text}>{ this.props.spell.name }</p>
           </div>
-          <div style={ styles.body }>
-            <p style={styles.text}>Range: { props.range }</p>
+  
+          {/* Body */}
+          <div>
+            <div style={ styles.body }>
+              <p style={styles.text}>Level: { this.props.spell.level }</p>
+            </div>
+            <div style={ styles.body }>
+              <p style={styles.text}>Range: { this.props.spell.range }</p>
+            </div>
           </div>
         </div>
-      </div>
-    </button>
-  );
+      </button>
+    );
+  }
 }
 
 const styles = {
   wrapper: {
-    border: '1px solid black',
     padding: 5,
     margin: 5,
   },

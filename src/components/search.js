@@ -1,34 +1,32 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Image
-} from 'react-native';
+import { Input } from './baseComponents';
+
+import searchImage from '../resources/icons/search.png';
 
 export function Search(props) {
   return (
-    <View style={styles.searchField}>
-      <TouchableOpacity onPress={() => props.onConfirm()}>
-        <Image source={require('../resources/icons/search.png')} style={[styles.searchImage, {marginRight: 10}]} />        
-      </TouchableOpacity>
+    <div style={{ ...styles.serachField, ...props.style }}>
+      <img
+        source={searchImage} alt=""
+        style={{...styles.searchImage, marginRight: 10 }}
+        onClick={() => props.onConfirm()}
+      />
 
-      <TextInput style={styles.textInput} onChange={(e) => props.onChange(e.nativeEvent.text)} placeholder={props.placeholder} value={props.value} />
+      <Input style={{ ...props.inputStyle, textAlign: 'left' }} onChange={(value) => props.onChange(value)} onEnter={() => props.onConfirm()} placeholder={props.placeholder} value={props.value} />
 
-      <TouchableOpacity onPress={() => {props.onClear()}}>
-        <Image source={require('../resources/icons/clear.png')} style={styles.searchImage} />
-      </TouchableOpacity>
-    </View>
+      <img
+        source={require('../resources/icons/clear.png')} alt=""
+        style={{ ...styles.searchImage, marginLeft: 10 }}
+        onClick={() => props.onClear()}
+      />
+    </div>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = {
   searchField: {
     borderWidth: 1,
     borderColor: '#a8b0bd',
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
     margin: 10
@@ -36,9 +34,5 @@ const styles = StyleSheet.create({
   searchImage: {
     height: 20,
     width: 20
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 18
   }
-});
+};

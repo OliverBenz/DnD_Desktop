@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   Search,
   Card,
+  NavButtons,
   ActivityIndicator
 } from '../components/componentNav';
 
@@ -15,15 +16,16 @@ export default class SpellList extends Component{
       spellList: [],
       search: "",
 
-      spellsPerPage: 20,
-      page: 0,
+      spellsPerPage: 10,
+      page: 1,
 
       isLoading: false
     }
   }
 
   componentDidMount(){
-    this._getSpellList(1, "");
+    this._getSpellList(1, this.state.search);
+    this._getSpellCount();
   }
 
   render(){
@@ -37,14 +39,37 @@ export default class SpellList extends Component{
     }
 
     return(
-      <div style={{flex: 1}}>
-        <Search value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(1, this.state.search)} />
+      <div>
+        <Search inputStyle={{ width: '300px' }} style={{alignItems: 'center'}} value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(1, this.state.search)} />
 
         <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          { this.state.spellList.map(s => ( <Card id={s.id} title={s.name} level={s.level} range={s.range} onClick={(id) => this.props.history.push(`/spells/${id}`)} /> )) }
+          { this.state.spellList.map(s => ( <Card spell={s} onClick={(id) => this.props.history.push(`/spells/${id}`)} /> )) }
         </div>
+
+        <NavButtons
+          pageCount={201}
+          page={this.state.page}
+
+          onChange={(page) => this.setState({ page: page })}
+          onEnter={() => this._getSpellList(this.state.page, "")}
+          onClickNext={() => this._onClickNext()}
+          onClickBack={() => this._onClickBack()}
+        />
       </div>
     );
+  }
+
+  _onClickBack = () => {
+    const { page, filter } = this.state;
+    
+    this._getSpellList(page - 1, filter);
+    this.setState({ page: page - 1 });
+  }
+  _onClickNext = () => {
+    const { page, filter } = this.state;
+
+    this._getSpellList(page + 1, filter);
+    this.setState({ page: page + 1 });
   }
 
   _clearFilter = () => {
@@ -57,7 +82,7 @@ export default class SpellList extends Component{
     const offset = (page - 1) * spellPerPage;
     let url = `http://benz-prints.com:3004/dnd/general/spells/${offset}/${spellPerPage}`;
 
-    if(search !== "") url+=`/${search}`;
+    if(search !== undefined) url+=`/${search}`;
     
     fetch(url, {
       method: 'GET',
@@ -67,9 +92,14 @@ export default class SpellList extends Component{
     })
     .then((res) => res.json())
     .then((resJ) => {
-      var spellList = resJ.data;
-
-      this.setState({ spellList: spellList, isLoading: false, page: 0 });
+      if(resJ.success && resJ.data.length !== 0){
+        this.setState({ spellList: resJ.data });
+        if(this.state.isLoading === true) this.setState({ isLoading: false });
+      }
     });
+  }
+
+  _getSpellCount = () => {
+    /* TODO: Backend -> same request as getUserSpells and getSpells, just with COUNT(id) */
   }
 }
