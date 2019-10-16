@@ -12,6 +12,7 @@ export class Card extends Component{
   
   render(){
     const { boxShadow } = this.state;
+    const { id, name, level, range } = this.props.spell;
 
     return(
       <button
@@ -23,22 +24,23 @@ export class Card extends Component{
         borderRadius: 8,
         margin: '5px'
       }, ...this.props.style}}
-      onClick={() => this.props.onClick(this.props.id)}
+      onClick={() => this.props.onClick()}
       onMouseOver={() => this.setState({ boxShadow: '0 6px 8px 0 rgba(0,0,0,0.24), 0 15px 28px 0 rgba(0,0,0,0.19)' })} 
-      onMouseOut={() => this.setState({ boxShadow: 'none' })} >
-        <div style={styles.wrapper} key={this.props.spell.id}>
+      onMouseOut={() => this.setState({ boxShadow: 'none' })}
+      >
+        <div style={styles.wrapper} key={id}>
           {/* Header */}
           <div style={styles.header}>
-            <p style={styles.text}>{ this.props.spell.name }</p>
+            <p style={styles.text}>{ name }</p>
           </div>
   
           {/* Body */}
           <div>
             <div style={ styles.body }>
-              <p style={styles.text}>Level: { this.props.spell.level }</p>
+              <p style={styles.text}>Level: { level }</p>
             </div>
             <div style={ styles.body }>
-              <p style={styles.text}>Range: { this.props.spell.range }</p>
+              <p style={styles.text}>Range: { range }</p>
             </div>
           </div>
         </div>

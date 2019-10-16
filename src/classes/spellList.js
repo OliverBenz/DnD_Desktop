@@ -44,7 +44,7 @@ export default class SpellList extends Component{
         <Search inputStyle={{ width: '300px' }} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10}} value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(1, this.state.search)} />
 
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
-          { this.state.spellList.map(s => ( <Card spell={s} onClick={(id) => this.props.history.push(`/spells/${id}`)} /> )) }
+          { this.state.spellList.map(s => ( <Card spell={s} onClick={() => this.props.history.push(`/spellSpec/${s.id}`)} /> )) }
         </div>
 
         <NavButtons
@@ -101,7 +101,7 @@ export default class SpellList extends Component{
     .then((resJ) => {
       if(resJ.success && resJ.data.length !== 0){
         this.setState({ spellList: resJ.data });
-        if(this.state.isLoading === true) this.setState({ isLoading: false });
+        if(this.state.isLoading) this.setState({ isLoading: false });
       }
     });
   }

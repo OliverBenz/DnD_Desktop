@@ -19,7 +19,7 @@ const routing = (
             <Route exact path="/" component={Home} />
             {/* <Route path="/home" component={Home} /> */}
             <Route path="/spells" component={SpellList} />
-            <Route path="/spells/:id" component={SpellSpecific} />
+            <Route path="/spellSpec/:spellId" component={SpellSpecific} />
             <Route path="/converter" component={Converter} />
             <Route path="/character" component={Character} />
         </Switch>
