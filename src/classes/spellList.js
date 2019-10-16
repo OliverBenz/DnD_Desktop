@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import {
-  View,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
 
-import Search from '../components/search.js';
-import { Card } from '../components/card.js';
+import {
+  Search,
+  Card,
+  ActivityIndicator
+} from '../components/componentNav';
 
 export default class SpellList extends Component{
  
@@ -25,32 +23,43 @@ export default class SpellList extends Component{
   }
 
   componentDidMount(){
-    this._getSpellList();
+    this._getSpellList(1, "");
   }
 
   render(){
     if(this.state.isLoading){
       // TODO: Center indivator to center of screen
       return (
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{alignItems: 'center', justifyContent: 'center'}}>
           <ActivityIndicator size="large" color="#0000ff" />
-        </View>
+        </div>
       );
     }
 
     return(
-      <ScrollView style={{flex: 1}}>
-        <Search value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(this.props.navigation.state.params.url + "/" + parseInt(this.state.page * this.state.spellsPerPage) + "/" + parseInt(this.state.spellsPerPage) + "/" + this.state.search)} />
+      <div style={{flex: 1}}>
+        <Search value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(1, this.state.search)} />
 
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           { this.state.spellList.map(s => ( <Card id={s.id} title={s.name} level={s.level} range={s.range} onClick={(id) => this.props.history.push(`/spells/${id}`)} /> )) }
-        </View>
-      </ScrollView>
+        </div>
+      </div>
     );
   }
 
-  _getSpellList = () => {
-    fetch('http://benz-prints.com:3004/dnd/general/spells/0/20', {
+  _clearFilter = () => {
+    this.setState({ search: "" });
+    this._getSpellList(1, "");
+  }
+
+  _getSpellList = (page, search) => {
+    const spellPerPage = this.state.spellsPerPage;
+    const offset = (page - 1) * spellPerPage;
+    let url = `http://benz-prints.com:3004/dnd/general/spells/${offset}/${spellPerPage}`;
+
+    if(search !== "") url+=`/${search}`;
+    
+    fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

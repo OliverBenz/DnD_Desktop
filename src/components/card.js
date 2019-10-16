@@ -1,29 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
-export class Card extends Component{
-  render(){
-    return(
-      <button style={{width: '50%', backgroundColor: 'transparent', border: 'none'}} onClick={() => this.props.onClick(this.props.id)}>
-        <div style={styles.wrapper} key={this.props.id}>
-          {/* Header */}
-          <div style={styles.header}>
-            <p style={styles.text}>{ this.props.title }</p>
+export function Card(props){
+  return(
+    <button style={{width: '50%', backgroundColor: 'transparent', border: 'none'}} onClick={() => props.onClick(props.id)}>
+      <div style={styles.wrapper} key={props.id}>
+        {/* Header */}
+        <div style={styles.header}>
+          <p style={styles.text}>{ props.title }</p>
+        </div>
+
+        {/* Body */}
+        <div>
+          <div style={ styles.body }>
+            <p style={styles.text}>Level: { props.level }</p>
           </div>
-
-          {/* Body */}
-          <div>
-            <div style={ styles.body }>
-              <p style={styles.text}>Level: { this.props.level }</p>
-            </div>
-            <div style={ styles.body }>
-              <p style={styles.text}>Range: { this.props.range }</p>
-            </div>
+          <div style={ styles.body }>
+            <p style={styles.text}>Range: { props.range }</p>
           </div>
         </div>
-      </button>
-    );
-  }
+      </div>
+    </button>
+  );
 }
 
 const styles = {
