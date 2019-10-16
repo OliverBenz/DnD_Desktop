@@ -14,7 +14,7 @@ export class Button extends Component{
     const { borderColor, boxShadow } = this.state;
     return(
       <button 
-        style={{
+        style={{...{
           backgroundColor: '#378afa',
           color: 'white',
           
@@ -27,16 +27,13 @@ export class Button extends Component{
           boxShadow: boxShadow,
           
           paddingTop: '15px',
-          paddingBottom: '15px',/* 
-          paddingLeft: '32px',
-          paddingRight: '32px', */
-
+          paddingBottom: '15px',
 
           textAlign: 'center',
           textDecoration: 'none',
           display: 'inline-block',
           fontSize: '16px'
-        }}
+        }, ...this.props.style}}
         onMouseOver={() => this.setState({ borderColor: '#008CBA', boxShadow: '0 6px 8px 0 rgba(0,0,0,0.24), 0 15px 28px 0 rgba(0,0,0,0.19)' })}
         onMouseOut={() => this.setState({ backgroundColor: '#008CBA', boxShadow: 'none' })}
         onClick={() => this.props.onClick()} >
@@ -51,7 +48,15 @@ export class Input extends Component{
   render(){
     return(
       <input 
-      style={{...styles.input, ...this.props.style}}
+      style={{...{
+        fontSize: '16px',
+        border: '1px solid #aeaeae',
+
+        paddingTop: '8px',
+        paddingBottom: '8px',
+        paddingLeft: '4px',
+        paddingRight: '4px',
+      }, ...this.props.style }}
       value={this.props.value}
       placeholder={this.props.placeholder}
       onChange={(e) => this.props.onChange(e.target.value)}
@@ -62,15 +67,5 @@ export class Input extends Component{
 
   _onKeyPress = (key) => {
     if(key === "Enter") this.props.onEnter();
-  }
-}
-
-const styles = {
-  input: {
-    paddingTop: '8px',
-    paddingBottom: '8px',
-    paddingLeft: '4px',
-    paddingRight: '4px',
-    fontSize: '16px'
   }
 }

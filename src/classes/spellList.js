@@ -18,6 +18,7 @@ export default class SpellList extends Component{
 
       spellsPerPage: 10,
       page: 1,
+      pageCount: 201,
 
       isLoading: false
     }
@@ -40,14 +41,15 @@ export default class SpellList extends Component{
 
     return(
       <div>
-        <Search inputStyle={{ width: '300px' }} style={{alignItems: 'center'}} value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(1, this.state.search)} />
+        <Search inputStyle={{ width: '300px' }} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10}} value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(1, this.state.search)} />
 
-        <div style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
           { this.state.spellList.map(s => ( <Card spell={s} onClick={(id) => this.props.history.push(`/spells/${id}`)} /> )) }
         </div>
 
         <NavButtons
-          pageCount={201}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '20px' }}
+          pageCount={this.state.pageCount}
           page={this.state.page}
 
           onChange={(page) => this.setState({ page: page })}
@@ -62,14 +64,19 @@ export default class SpellList extends Component{
   _onClickBack = () => {
     const { page, filter } = this.state;
     
-    this._getSpellList(page - 1, filter);
-    this.setState({ page: page - 1 });
+    if(page > 1){
+      this._getSpellList(page - 1, filter);
+      this.setState({ page: page - 1 });
+    }
   }
-  _onClickNext = () => {
-    const { page, filter } = this.state;
 
-    this._getSpellList(page + 1, filter);
-    this.setState({ page: page + 1 });
+  _onClickNext = () => {
+    const { page, pageCount, filter } = this.state;
+
+    if(page < pageCount){
+      this._getSpellList(page + 1, filter);
+      this.setState({ page: page + 1 });    
+    }
   }
 
   _clearFilter = () => {

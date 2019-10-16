@@ -16,10 +16,11 @@ export class Card extends Component{
     return(
       <button
       style={{...{
-        width: '45%',
+        width: '400px',
         backgroundColor: 'transparent',
         boxShadow: boxShadow,
-        border: '1px solid black',
+        border: '1px solid #aeaeae',
+        borderRadius: 8,
         margin: '5px'
       }, ...this.props.style}}
       onClick={() => this.props.onClick(this.props.id)}
