@@ -41,7 +41,16 @@ export default class SpellList extends Component{
 
     return(
       <div>
-        <Search inputStyle={{ width: '300px' }} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10}} value={this.state.search} placeholder="Search..." onChange={(e) => this.setState({search: e})} onClear={() => this._clearFilter()} onConfirm={() => this._getSpellList(1, this.state.search)} />
+        <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10}}>
+          <Search
+            inputStyle={{ width: '300px' }}
+            value={this.state.search}
+            placeholder="Search..."
+            onChange={(e) => this.setState({search: e})}
+            onClear={() => this._clearFilter()}
+            onConfirm={() => this._getSpellList(1, this.state.search)}
+          />
+        </span>
 
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
           { this.state.spellList.map(s => ( <Card spell={s} onClick={() => this.props.history.push(`/spellSpec/${s.id}`)} /> )) }
