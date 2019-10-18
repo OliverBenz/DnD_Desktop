@@ -18,7 +18,7 @@ export class Button extends Component{
           backgroundColor: '#378afa',
           color: 'white',
           
-          margin: '5px',
+          // margin: '5px',
           width: '90px',
 
           border: 'none',
@@ -44,7 +44,6 @@ export class Button extends Component{
 }
 
 export class Input extends Component{
-
   render(){
     return(
       <input 
@@ -59,13 +58,48 @@ export class Input extends Component{
       }, ...this.props.style }}
       value={this.props.value}
       placeholder={this.props.placeholder}
+      type={this.props.type}
+      name={this.props.name}
       onChange={(e) => this.props.onChange(e.target.value)}
-      onKeyPress={(e) => this._onKeyPress(e.key)}
+      onKeyPress={(e) => this._onKeyPress(e.key, e.target.value)}
       />
     );
   }
 
-  _onKeyPress = (key) => {
-    if(key === "Enter") this.props.onEnter();
+  _onKeyPress = (key, value) => {
+    if(key === "Enter") this.props.onEnter(value);
   }
+}
+
+
+export function Dropdown(props){
+  return(
+    <select
+      style={{...{
+        fontSize: 16,
+        backgroundColor: 'transparent',
+        // borderColor: '#aeaeae',
+        border: 'none',
+        paddingLeft: 10,
+        paddingRight: 10
+      }, ...props.style}}
+      name={props.name}
+      onChange={(e) => props.onChange(e.target.value)}
+      value={props.value}
+    >
+      {
+        props.options.map(o => 
+          <option
+            style={{...{
+              border: '1px solid black'
+              // borderColor: '#aeaeae'
+            }, ...props.optionStyle}}
+            value={o.id}
+          >
+          {o.name}
+          </option>
+        )
+      }
+    </select>
+  );
 }

@@ -2,8 +2,8 @@ import { ActivityIndicator } from 'react-native';
 
 import { Card } from './card';
 import { Search } from './search';
-import { Button, Input } from './baseComponents';
+import { Button, Input, Dropdown } from './baseComponents';
 import { NavButtons } from './navButtons';
 
 
-export { ActivityIndicator, Search, Card, Button, Input, NavButtons };
+export { ActivityIndicator, Search, Card, Button, Input, Dropdown, NavButtons };

@@ -11,6 +11,8 @@ import SpellSpecific from './classes/spellSpecific.js';
 import Converter from './classes/converter.js';
 import Character from './classes/character/character.js';
 
+import Login from './classes/user/login';
+
 const routing = (
     <Router>
         <NavBar />
@@ -22,6 +24,7 @@ const routing = (
             <Route path="/spellSpec/:spellId" component={SpellSpecific} />
             <Route path="/converter" component={Converter} />
             <Route path="/character" component={Character} />
+            <Route path="/login" component={Login} />
         </Switch>
     </Router>
 );

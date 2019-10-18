@@ -74,7 +74,7 @@ export default class SpellSpecific extends Component{
   }
 
   _getSpell = (id) => {
-    fetch(`http://benz-prints.com:3004/dnd/general/spellSpec/${id}`, {
+    fetch(localStorage.getItem('url') + `/general/spellSpec/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

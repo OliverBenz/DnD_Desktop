@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Button } from '../components/baseComponents';
+
 export default class Converter extends Component{
   constructor(props){
     super(props);
@@ -38,7 +40,7 @@ export default class Converter extends Component{
 
         <p style={ styles.text }>Result: {this.state.result} {this.state.resType}</p>
 
-        <button style={styles.button} onClick={() => this._reset()} >Reset</button>
+        <Button text="Reset" onClick={() => this._reset()} />
       </div>
     );
   }
@@ -50,11 +52,5 @@ const styles={
   },
   text: {
     fontSize: 16
-  },
-  button: {
-    textAlign: 'center',
-    fontSize: 16,
-    padding: 5,
-    width: 80
-  },
+  }
 }

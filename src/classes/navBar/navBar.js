@@ -18,7 +18,28 @@ export default class NavBar extends React.Component{
                 <li>
                     <Link to="/converter">Converter</Link>
                 </li>
+
+                { this._checkLogin() }
             </ul>
         );
+    }
+
+    _checkLogin = () =>{
+        const authKey = localStorage.getItem('authKey');
+
+        if(! authKey){
+            return(
+                <li style={{float: 'right'}}>
+                    <Link to="/login">Login</Link>
+                </li>
+            );
+        }
+        else{
+            return(
+                <li style={{ float: 'right' }}>
+                    <Link to="/home" onClick={() => alert('test')}>Logout</Link>
+                </li>
+            )
+        }
     }
 }

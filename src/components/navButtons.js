@@ -8,7 +8,11 @@ export class NavButtons extends Component{
         <Button text="Back" onClick={() => this.props.onClickBack()} />
         
         <p style={styles.p} >Page: </p>
-        <Input style={{ width: '50px', textAlign: 'center' }} value={this.props.page} onChange={(page) => this.props.onChange(page)} onEnter={() => this.props.onEnter()} />
+        <Input
+          style={{ width: '50px', textAlign: 'center' }}
+          value={this.props.page}
+          onChange={(page) => this.props.onChange(page)}
+          onEnter={(page) => this.props.onEnter(page)} />
         
         <p style={styles.p}>of { this.props.pageCount }</p>
 

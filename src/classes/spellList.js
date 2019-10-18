@@ -26,7 +26,6 @@ export default class SpellList extends Component{
 
   componentDidMount(){
     this._getSpellList(1, this.state.search);
-    this._getSpellCount();
   }
 
   render(){
@@ -62,7 +61,7 @@ export default class SpellList extends Component{
           page={this.state.page}
 
           onChange={(page) => this.setState({ page: page })}
-          onEnter={() => this._getSpellList(this.state.page, "")}
+          onEnter={(page) => this._onEnter(page)}
           onClickNext={() => this._onClickNext()}
           onClickBack={() => this._onClickBack()}
         />
@@ -70,35 +69,40 @@ export default class SpellList extends Component{
     );
   }
 
+  _onEnter = (page) => {
+    this.setState({ page: parseInt(page) });
+    this._getSpellList(page, this.state.search);
+  }
+
   _onClickBack = () => {
-    const { page, filter } = this.state;
+    const { page, search } = this.state;
     
     if(page > 1){
-      this._getSpellList(page - 1, filter);
+      this._getSpellList(page - 1, search);
       this.setState({ page: page - 1 });
     }
   }
 
   _onClickNext = () => {
-    const { page, pageCount, filter } = this.state;
+    const { page, pageCount, search } = this.state;
 
     if(page < pageCount){
-      this._getSpellList(page + 1, filter);
+      this._getSpellList(page + 1, search);
       this.setState({ page: page + 1 });    
     }
   }
 
   _clearFilter = () => {
     this.setState({ search: "" });
-    this._getSpellList(1, "");
+    this._getSpellList(1, undefined);
   }
 
   _getSpellList = (page, search) => {
     const spellPerPage = this.state.spellsPerPage;
     const offset = (page - 1) * spellPerPage;
-    let url = `http://benz-prints.com:3004/dnd/general/spells/${offset}/${spellPerPage}`;
+    let url = localStorage.getItem('url') + `/general/spells/${offset}/${spellPerPage}`;
 
-    if(search !== undefined) url+=`/${search}`;
+    url += search === undefined ? '' : `/${search}`;
     
     fetch(url, {
       method: 'GET',
@@ -109,13 +113,28 @@ export default class SpellList extends Component{
     .then((res) => res.json())
     .then((resJ) => {
       if(resJ.success && resJ.data.length !== 0){
+        this._getPageCount();
         this.setState({ spellList: resJ.data });
         if(this.state.isLoading) this.setState({ isLoading: false });
       }
     });
   }
 
-  _getSpellCount = () => {
-    /* TODO: Backend -> same request as getUserSpells and getSpells, just with COUNT(id) */
+  _getPageCount = () => {
+    const { search } = this.state;
+    let url = localStorage.getItem('url') + "/general/spellCount";
+    url += search === undefined ? '' : `/${search}`;
+
+    fetch(url, {
+      method : 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((res) => res.json())
+    .then((resJ) => {
+      let pageCount = Math.ceil(resJ.data / this.state.spellsPerPage);
+      this.setState({ pageCount });
+    });
   }
 }
